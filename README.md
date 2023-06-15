@@ -12,9 +12,9 @@ pip install git+https://github.com/Pkfilho95/Django-Two-Factor-Authentication.gi
 
 ## Configuration
 
-1. Define your `AUTH_USER_MODEL` in `settings.py`. By default, the `User` model is the Django authentication model.
+1. Define your `AUTH_USER_MODEL` in the `settings.py` file. By default, the `User` model is the Django authentication model.
 
-2. Add `two_factor_auth` to the `INSTALLED_APPS` list in the `settings.py` file of your Django project:
+2. Add `two_factor_auth` to the `INSTALLED_APPS` list in the `settings.py` file:
 
 ```python
 INSTALLED_APPS = [
