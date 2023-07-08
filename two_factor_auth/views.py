@@ -2,9 +2,11 @@ from django.shortcuts import redirect
 from django.conf import settings
 from django.views.generic import FormView
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, get_user_model
 
 from .forms import TwoFactorAuthForm
+
+USER_MODEL = get_user_model()
 
 class AuthView(FormView):
     """
@@ -43,7 +45,7 @@ class TwoAuthView(FormView):
     success_url = settings.LOGIN_REDIRECT_URL
 
     def get(self, request, *args, **kwargs):
-        user = settings.AUTH_USER_MODEL.objects.get(id=self.request.session.get('id'))
+        user = USER_MODEL.objects.get(id=self.request.session.get('id'))
         user_token = user.twofactorauthmodel
 
         # Update the token
@@ -56,7 +58,7 @@ class TwoAuthView(FormView):
         return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):
-        user = settings.AUTH_USER_MODEL.objects.get(id=self.request.session.get('id'))
+        user = USER_MODEL.objects.get(id=self.request.session.get('id'))
         user_token = user.twofactorauthmodel.token
 
         token = form.cleaned_data.get('token')
